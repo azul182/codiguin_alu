@@ -57,7 +57,7 @@
                 <h3>Atividades Cadastradas</h3>
                 <% for (var n=0; n<dados.length; n++){%> <!--pq tem q ser menor? pq o length conta qnts documentos ele tem, começa a numerar por 0 -->
                 <div class="card">
-                    <div class="card-header bg-dark text-light">Data:<%=dados[n].data.getDay()+2%>° Dia da semana/<%=dados[n].data.getDate()+1%>/<%=dados[n].data.getMonth()+1%></div>
+                    <div class="card-header bg-dark text-light">Data:<%=dados[n].data.getDay()+1%>° Dia da semana/<%=dados[n].data.getDate()%>/<%=dados[n].data.getMonth()+1%></div>
                     <div class="card-body">
                         <div class="card-title text-dark">Tipo: <%=dados[n].tipo%></div>
                         <div class="card-text text-dark">Disciplina: <%=dados[n].disciplina%></div>
