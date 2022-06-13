@@ -9,9 +9,19 @@ module.exports = (app)=>{
     //buscar o nome na collection usuarios
     var user = await usuarios.findOne({_id:id})
     //buscar todas as atividades desse usuário 
-    var buscar = await atividades.find({usuario:id}) //esse find q gera os dados
+    var abertas = await atividades.find({usuario:id,status:0}).sort({data:1}) //esse find q gera os dados
+    //buscar todas as atividades desse usuário 
+    var entregues = await atividades.find({usuario:id,status:1}).sort({data:1}) //esse find q gera os dados
+    //buscar todas as atividades desse usuário 
+    var excluidas = await atividades.find({usuario:id,status:2}).sort({data:1}) //esse find q gera os dados
+    
+    
     //console.log(buscar)
-    res.render('atividades.ejs',{nome:user.nome,id:user._id,dados:buscar}) //n ta reconhecendo dados.nome, por isso colocou use.nome / se colocar _ no id vai buscar na collection atividades, mas o id corresponde ao documento da tividade e não do usuario, ent qnd ta mandando o id da atividade dentro não vai funcionmar, tem q ser o id do user
+   // res.render('atividades.ejs',{nome:user.nome,id:user._id,dados:abertas,dadosx:excluidas,dadose:entregues})  //n ta reconhecendo dados.nome, por isso colocou use.nome / se colocar _ no id vai buscar na collection atividades, mas o id corresponde ao documento da tividade e não do usuario, ent qnd ta mandando o id da atividade dentro não vai funcionmar, tem q ser o id do user
+   //abrir a view acordiana 
+    //res.render('accordian.ejs',{nome:user.nome,id:user._id,dados:abertas,dadosx:excluidas,dadose:entregues})
+    //abrir a view acordiana 
+    res.render('atividades2.ejs',{nome:user.nome,id:user._id,dados:abertas,dadosx:excluidas,dadose:entregues})
     })
 
     //gravar as informações
@@ -41,13 +51,24 @@ module.exports = (app)=>{
     app.get("/excluir", async(req,res)=>{
         //recuperar o parâmetro id da barra de endereço
         var id = req.query.id
-        var excluir = await atividades.findOneAndRemove({ //pd ser findOneAndDelete tbm, faz same coisa
-            _id:id
-        })
+        var excluir = await atividades.findOneAndUpdate( //pd ser findOneAndDelete tbm, faz same coisa
+            {_id:id},
+            {status:2}
+        )
         //redirecionar para  a rota atividades
         res.redirect('/atividades?id='+excluir.usuario)
     })
-
+     //entregar atividades
+     app.get("/entregue", async(req,res)=>{
+        //recuperar o parâmetro id da barra de endereço
+        var id = req.query.id
+        var entregue = await atividades.findOneAndUpdate( //pd ser findOneAndDelete tbm, faz same coisa
+            {_id:id},
+            {status:1}
+        )
+        //redirecionar para  a rota atividades
+        res.redirect('/atividades?id='+entregue.usuario)
+    })
     
 }
 
