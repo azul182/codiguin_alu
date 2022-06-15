@@ -70,6 +70,18 @@ module.exports = (app)=>{
         res.redirect('/atividades?id='+entregue.usuario)
     })
     
+         //desfazer ações
+         app.get("/desfazer", async(req,res)=>{
+            //recuperar o parâmetro id da barra de endereço
+            var id = req.query.id
+            var desfazer = await atividades.findOneAndUpdate( //pd ser findOneAndDelete tbm, faz same coisa
+                {_id:id},
+                {status:0}  
+            )
+            //redirecionar para  a rota atividades
+            res.redirect('/atividades?id='+desfazer.usuario)
+        })
+        
 }
 
 //registro ok, login ok, mas gravou, erro: objeto teve o valor vazio da comparação id model usuarios

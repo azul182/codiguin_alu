@@ -3,12 +3,12 @@ const express = require('express')
 //executar o express 
 const app = express()
 //definir  aporta do servidor local
-const porta = 3535
+const porta = process.env.PORT||3535
 
 /*conteúdo aleatório inicial 
 /app.get('/', (req,res)=>{
     res.send("qualquer coisa")
-}) 
+})
 
 //ligar o servidor na porta 3535
 app.listen(porta)*/
