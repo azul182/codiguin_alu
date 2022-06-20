@@ -53,7 +53,7 @@
                 <input type="radio" name="entrega" class="form-check-input" id="" value="email" <%=dados.entrega=="email"?"checked":""%>>Email
                 <input type="radio" name="entrega" class="form-check-input" id="" value="formulario" <%=dados.entrega=="formulario"?"checked":""%>>Forms             
                 <label for="" class="form-control"><%=dados.instrucoes%></label>
-                <textarea name="orientacao" id="" cols="30" rows="10" class="form-control"></textarea>
+                <textarea name="orientacao" id="" cols="30" rows="10" class="form-control" <%=dados.data%> - toString:<%=dados.data.toString()%> - toString()</textarea>
                 <input type="submit" value="Gravar" class="btn btn-outline-dark botao">
             </form>
             </div>
