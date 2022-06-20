@@ -74,16 +74,24 @@ module.exports = (app)=>{
          app.get("/desfazer", async(req,res)=>{
             //recuperar o parâmetro id da barra de endereço
             var id = req.query.id
-            var desfazer = await atividades.findOneAndUpdate( //pd ser findOneAndDelete tbm, faz same coisa
+            var desfazer = await atividades.findOneAndUpdate( 
                 {_id:id},
                 {status:0}  
             )
             //redirecionar para  a rota atividades
             res.redirect('/atividades?id='+desfazer.usuario)
         })
+        //criar rota para renderizar a view alterar
+
+        app.get('/alterar',async(req,res)=>{
+            //capturar o id(atividade) da barra de endereço
+            var id = req.query.id
+            //buscar a atividade que será alterada
+            var alterar = await atividades.findOne({_id:id})
+            //buscar o nome na collection usuario
+            var user = await usuarios.findOne({_id:alterar.usuario})
+            //abrir a view atividades2
+            res.render('alterar.ejs',{nome:user.nome,id:user._id,dados:alterar})
+        })
         
 }
-
-//registro ok, login ok, mas gravou, erro: objeto teve o valor vazio da comparação id model usuarios
-//nos campos tipo hidden estao sem valor, só o nome tem value. logo, achamos o problem
-//qm mandou as informações p o cara atividades é o cara login (Mas ta certo pq no ele taprpcurando e levando id)
